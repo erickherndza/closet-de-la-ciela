@@ -251,6 +251,8 @@ details.policy p{margin:10px 0 0;color:var(--body)}
 .footer-brand p{margin:0;font-size:.875rem;max-width:32ch;opacity:.78}
 .site-footer h4{margin:0 0 14px;font-family:var(--font-label);font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:400;color:var(--accent)}
 .site-footer ul{display:grid;gap:9px;font-size:.875rem}
+.dev-credit{margin:0;padding:0 0 24px;text-align:center;font-size:.75rem;opacity:.85}
+.dev-credit a{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px}
 .footer-bottom{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center;border-top:1px solid #3F7184;padding:20px 0 28px;font-size:.75rem;opacity:.85}
 
 /* ---------- responsive ---------- */
