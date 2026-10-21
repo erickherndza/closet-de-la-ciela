@@ -141,7 +141,7 @@
     var badges = '';
     if (!p.available) badges += '<span class="badge sold">Sold out</span>';
     else if (p.collections.indexOf('new') > -1) badges += '<span class="badge">New</span>';
-    return '<a class="card" href="' + window.STORE_URL + '/products/' + p.handle + '" target="_blank" rel="noopener">' +
+    return '<a class="card" href="product.html?p=' + p.handle + '">' +
       '<div class="card-media">' +
       (badges ? '<div class="card-badges">' + badges + '</div>' : '') +
       '<img src="' + p.img + '" alt="' + esc(p.title) + '" loading="lazy" width="800" height="1000">' +
@@ -237,6 +237,101 @@
     render();
   }
 
+
+  /* ---------- product detail ---------- */
+  function initProductPage() {
+    var root = $('#product');
+    if (!root) return;
+    var P = window.PRODUCTS || [];
+    var handle = new URLSearchParams(window.location.search).get('p');
+    var p = P.filter(function (x) { return x.handle === handle; })[0];
+    if (!p) {
+      root.innerHTML = '<div class="wrap"><p class="empty">We could not find that piece. <a href="shop.html" style="text-decoration:underline">Back to the shop</a></p></div>';
+      return;
+    }
+    document.title = p.title + ' | El Closet de la Ciela';
+    var meta = $('meta[name="description"]'); if (meta) meta.setAttribute('content', p.desc || p.title);
+    var sel = {};
+    p.options.forEach(function (o) { sel[o.name] = null; });
+    function variant() {
+      if (!p.options.length) return p.variants[0];
+      var names = p.options.map(function (o) { return sel[o.name]; });
+      if (names.some(function (n) { return !n; })) return null;
+      return p.variants.filter(function (v) { return v.options.join('|') === names.join('|'); })[0] || null;
+    }
+    function optionAvailable(oi, val) {
+      return p.variants.some(function (v) {
+        if (v.options[oi] !== val || !v.available) return false;
+        return p.options.every(function (o, k) { return k === oi || !sel[o.name] || v.options[k] === sel[o.name]; });
+      });
+    }
+    var crumbCat = CATEGORY_LABEL[p.category];
+    var thumbs = p.images.map(function (src, k) {
+      return '<button type="button" class="thumb" data-i="' + k + '" aria-label="Show photo ' + (k + 1) + '" aria-current="' + (k === 0) + '"><img src="' + src + '" alt="" width="120" height="150" loading="lazy"></button>';
+    }).join('');
+    root.innerHTML =
+      '<div class="wrap"><p class="crumbs" style="margin:0 0 24px"><a href="index.html">Home</a> / <a href="shop.html">Shop</a> / <a href="' + p.category + '.html">' + crumbCat + '</a> / ' + esc(p.title) + '</p>' +
+      '<div class="pdp">' +
+      '<div class="pdp-gallery"><div class="pdp-main"><img id="pdp-img" src="' + p.images[0] + '" alt="' + esc(p.title) + '" width="800" height="1000"></div>' +
+      (p.images.length > 1 ? '<div class="thumbs">' + thumbs + '</div>' : '') + '</div>' +
+      '<div class="pdp-info">' +
+      '<span class="eyebrow">' + crumbCat + '</span>' +
+      '<h1 class="h2" style="margin:0">' + esc(p.title) + '</h1>' +
+      '<p class="pdp-price" id="pdp-price"></p>' +
+      '<div id="pdp-options"></div>' +
+      '<div class="pdp-buy"><label class="sr-only" for="pdp-qty">Quantity</label><input id="pdp-qty" class="qty" type="number" min="1" max="10" value="1"><a class="btn" id="pdp-add" href="#">Add to bag</a></div>' +
+      '<p class="form-msg" id="pdp-msg" role="status" aria-live="polite"></p>' +
+      '<div class="pdp-desc">' + p.html + '</div>' +
+      '<details class="policy"><summary>Shipping</summary><p>International shipments from USA. Free shipping on selected orders; taxes and customs fees are not included.</p></details>' +
+      '</div></div></div>';
+
+    var imgEl = $('#pdp-img');
+    $$('.thumb', root).forEach(function (t) {
+      t.addEventListener('click', function () {
+        imgEl.src = p.images[+t.getAttribute('data-i')];
+        $$('.thumb', root).forEach(function (o) { o.setAttribute('aria-current', String(o === t)); });
+      });
+    });
+
+    function renderOptions() {
+      $('#pdp-options').innerHTML = p.options.map(function (o, oi) {
+        return '<fieldset class="opt"><legend class="label">' + esc(o.name) + (sel[o.name] ? ': <strong>' + esc(sel[o.name]) + '</strong>' : '') + '</legend><div class="chips">' +
+          o.values.map(function (val) {
+            var ok = optionAvailable(oi, val);
+            return '<button type="button" class="chip' + (ok ? '' : ' is-out') + '" data-o="' + esc(o.name) + '" data-v="' + esc(val) + '" aria-pressed="' + (sel[o.name] === val) + '">' + esc(val) + '</button>';
+          }).join('') + '</div></fieldset>';
+      }).join('');
+      $$('#pdp-options .chip').forEach(function (b) {
+        b.addEventListener('click', function () { sel[b.getAttribute('data-o')] = b.getAttribute('data-v'); update(); });
+      });
+    }
+    function update() {
+      renderOptions();
+      var v = variant(), price = $('#pdp-price'), add = $('#pdp-add'), msg = $('#pdp-msg');
+      var lo = Math.min.apply(null, p.variants.map(function (x) { return x.price; }));
+      if (v) price.innerHTML = (v.compare ? '<s>' + money(v.compare) + '</s> ' : '') + money(v.price);
+      else price.textContent = (p.variants.length > 1 ? 'From ' : '') + money(lo);
+      msg.className = 'form-msg';
+      if (v && !v.available) { add.textContent = 'Sold out'; add.setAttribute('aria-disabled', 'true'); msg.textContent = 'This option is currently sold out.'; }
+      else if (!v) { add.textContent = 'Select options'; add.setAttribute('aria-disabled', 'true'); msg.textContent = ''; }
+      else { add.textContent = 'Add to bag'; add.removeAttribute('aria-disabled'); msg.textContent = ''; }
+    }
+    $('#pdp-add').addEventListener('click', function (e) {
+      e.preventDefault();
+      var v = variant();
+      if (!v || !v.available) return;
+      var q = Math.max(1, Math.min(10, parseInt($('#pdp-qty').value, 10) || 1));
+      window.open(window.STORE_URL + '/cart/' + v.id + ':' + q, '_blank', 'noopener');
+      var msg = $('#pdp-msg'); msg.className = 'form-msg ok'; msg.textContent = 'Opening your bag in the store to complete checkout…';
+    });
+    update();
+
+    var rel = P.filter(function (x) { return x.category === p.category && x.handle !== p.handle && x.available; }).slice(0, 4);
+    var relEl = $('#related');
+    if (relEl && rel.length) relEl.innerHTML = rel.map(cardHTML).join('');
+    else if (relEl) relEl.closest('section').hidden = true;
+  }
+
   /* ---------- forms (demo: validated client-side, no backend) ---------- */
   function initForms() {
     var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -259,6 +354,6 @@
   function initYear() { $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); }); }
 
   document.addEventListener('DOMContentLoaded', function () {
-    initHeader(); initSlider(); initProducts(); initForms(); initYear();
+    initHeader(); initSlider(); initProducts(); initProductPage(); initForms(); initYear();
   });
 })();
