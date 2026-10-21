@@ -59,6 +59,22 @@
     onScroll();
   }
 
+  /* ---------- announcement bar ---------- */
+  function initAnnounce() {
+    var bar = $('.announce'); if (!bar) return;
+    var items = $$('p', bar); if (items.length < 2) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    var i = 0, paused = false;
+    bar.addEventListener('mouseenter', function () { paused = true; });
+    bar.addEventListener('mouseleave', function () { paused = false; });
+    setInterval(function () {
+      if (paused || document.hidden) return;
+      items[i].classList.remove('is-active');
+      i = (i + 1) % items.length;
+      items[i].classList.add('is-active');
+    }, 4500);
+  }
+
   /* ---------- hero slider (delegated: survives re-renders) ---------- */
   function initSlider() {
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -170,9 +186,23 @@
       el.textContent = n + ' piece' + (n === 1 ? '' : 's');
     });
 
-    // Rail arrows
+    // Rail arrows + progress
     $$('.rail-wrap').forEach(function (w) {
-      var rail = $('.rail', w);
+      var rail = $('.rail', w), bar = $('.rail-progress span', w);
+      var prev = $('[data-rail="prev"]', w), next = $('[data-rail="next"]', w);
+      function sync() {
+        var max = rail.scrollWidth - rail.clientWidth;
+        if (bar) {
+          var vis = rail.scrollWidth ? rail.clientWidth / rail.scrollWidth : 1;
+          bar.style.width = Math.min(100, vis * 100) + '%';
+          bar.style.left = (max > 0 ? (rail.scrollLeft / max) * (100 - vis * 100) : 0) + '%';
+        }
+        if (prev) prev.disabled = rail.scrollLeft <= 2;
+        if (next) next.disabled = rail.scrollLeft >= max - 2;
+      }
+      rail.addEventListener('scroll', sync, { passive: true });
+      window.addEventListener('resize', sync);
+      sync();
       $$('[data-rail]', w).forEach(function (b) {
         b.addEventListener('click', function () {
           var step = rail.clientWidth * 0.8 * (b.getAttribute('data-rail') === 'next' ? 1 : -1);
@@ -354,6 +384,6 @@
   function initYear() { $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); }); }
 
   document.addEventListener('DOMContentLoaded', function () {
-    initHeader(); initSlider(); initProducts(); initProductPage(); initForms(); initYear();
+    initHeader(); initAnnounce(); initSlider(); initProducts(); initProductPage(); initForms(); initYear();
   });
 })();
