@@ -1,10 +1,10 @@
 # El Closet de la Ciela — demo redesign
 
-Static multi-page demo of the redesign of https://elclosetdelacielausa.com (Shopify store). Plain HTML/CSS/JS, no framework, no build step needed to view it. Language of the site: English. Language with the owner (Erick): Spanish.
+Static multi-page demo of the redesign of https://elclosetdelacielausa.com (Shopify store), plus the **Shopify theme** ported from it (`shopify-theme/`, see "Shopify theme" below). The demo is plain HTML/CSS/JS, no framework, no build step needed to view it. Language of the site: English. Language with the owner (Erick): Spanish.
 
-- Repo: https://github.com/erickherndza/closet-de-la-ciela (branch `main`)
+- Repo: https://github.com/erickherndza/closet-de-la-ciela (branch `main` = demo; branch `shopify-theme` = Shopify theme work)
 - Live demo for the client (GitHub Pages): https://erickherndza.github.io/closet-de-la-ciela/
-- Pushing to `main` redeploys the demo in 1–2 minutes.
+- Pushing to `main` redeploys the demo in 1–2 minutes. Pushing `shopify-theme` does not.
 
 ## Structure
 
@@ -47,6 +47,36 @@ Data is a snapshot. To refresh: fetch `https://elclosetdelacielausa.com/products
 - Forms are not connected to any backend (Shopify, Klaviyo, or an email service).
 - Gold collection has only 1 piece in the store.
 - Footer credit: "Development: Erick Hernandez Arias" → https://www.erickhernandezarias.net/ (keep it).
+
+## Shopify theme (`shopify-theme/`)
+
+Online Store 2.0 theme in Liquid, ported from the demo (same tokens, fonts, slider, cards). Real products, collections, policies, blog and pages come from the store, not from `js/products.js`.
+
+- **Store**: admin `https://admin.shopify.com/store/elclosetdelacielausa`, myshopify domain `dc6ka6-zq.myshopify.com`. The public theme (`valoon-theme REBRAND`) is untouched; `Dawn` and `valoon-theme REBRAND with Installments message` are kept on purpose. Never publish a theme without Erick asking.
+- **Current client version**: `closet-de-la-ciela-redesign-v8` (unpublished), id `193095336253`. Preview link, no login needed: `https://elclosetdelacielausa.com/?preview_theme_id=193095336253` (add `&pb=0` to hide the preview bar). `v7` is obsolete. Each upload creates a new theme id: update this line and the link after every upload.
+- **Layout**: `layout/theme.liquid`, `config/` (colors, logo, social links, credit), `sections/` (`header-group.json` + `footer-group.json` section groups, hero slider, product rail, collection tiles, feature split, `main-*` page sections, blog/article, newsletter, recently viewed…), `snippets/` (`theme-image` falls back to files bundled in `assets/`, `product-card`, `page-hero`, `icon`), `templates/*.json`, `assets/theme.css` (demo CSS + Shopify additions) and `assets/theme.js`. Header menu links and footer columns are section **blocks**, not store menus, so the live store's navigation is never touched.
+- **Check before packaging**: `shopify theme check --path shopify-theme` (only 3 expected warnings: Google Fonts remote assets). Shopify CLI 4.9.4 is installed globally.
+- **Delivery workflow**: `cd shopify-theme && zip -rq ../closet-de-la-ciela-redesign-vN.zip . -x ".DS_Store"`, then **Erick uploads it** in Admin → Online Store → Themes → Import → Upload zip (Claude cannot attach files in that dialog, and `shopify theme push` fails: the CLI login account has no access to the store). Then verify the new id with the checks below. Zips are git-ignored.
+- **Store changes already made** (live store has them): four automated collections, `necklaces` (title contains "necklace"), `earrings` (contains "earring" OR "stud" OR "baguette flower"), `bracelets` ("bracelet"), `rings` (contains "ring" AND NOT "earring" AND NOT "necklace"). Header, footer, home buttons and category chips link to them. The demo's own category rule wrongly lists "Royal Blue Drop Layering Necklace" under Rings ("Layering" contains "ring"); the Shopify collections do not.
+- **Parity with the public store**: `/blogs/news` + 4 articles, pages `about-us`, `contact`, `privacy-policy`, `data-sharing-opt-out`, `our-terms-and-conditions`, the 5 `/policies/*` pages (styled via `.shopify-policy__*` CSS), "Trending now" search suggestions, back-in-stock request (a contact form tagged `back-in-stock`, not an app), recently viewed, share button. Add to bag uses `/cart/add.js` and goes to `/cart`; checkout is Shopify's.
+
+### Shopify gotchas learned (do not repeat)
+
+- A `url` setting with an **external** `default` (e.g. an Instagram link) makes Shopify silently drop that section file on import; any JSON template that uses the section is then dropped too (home returned 404). `theme check` does not catch it. External URLs go in `config/settings_data.json` or in the template JSON, never as schema defaults.
+- `grid-auto-columns:minmax(0,58%)` on the horizontal rail splits free space across all 12 columns (30 px cards on phones). Use a real minimum: `minmax(210px,58%)`.
+- Section ids/handles in JSON templates are validated against each section's schema; a quick local script that checks setting ids, select values and ranges catches most import rejections.
+- There is no `policies` Liquid object: use `shop.shipping_policy.url`, `shop.refund_policy.url`.
+- Active menu link is an exact path match; a substring match highlights "Collections" on every `/collections/...` page.
+- Shopify blocks framing the storefront, so mobile can't be emulated with an iframe. Test with Playwright at 390 px; Chrome's window cannot be narrowed from the tool. The preview URL works anonymously in Playwright.
+- The "Cookie consent" box and the "Draft" bar are Shopify's, not the theme's.
+- In the admin's themes list, a row's `⋯` menu only shows "Eliminar" when the row sits low on the screen (menu opens upward); scroll so the row is near the bottom. Claude's permission layer may block deleting themes unless Erick says so explicitly in chat.
+
+### Still pending (Shopify theme)
+
+- Brand story placeholder text on the home page (client must supply it).
+- Contact form, newsletter, back-in-stock form and checkout were **not** submitted/tested on purpose (they send real data). Someone should test them with an own email before publishing.
+- Publishing the theme is Erick's decision, after the client approves.
+- Last fixes (v8: collection titles) are in the zip but may not be in the last commit on `shopify-theme`.
 
 ## Testing
 
