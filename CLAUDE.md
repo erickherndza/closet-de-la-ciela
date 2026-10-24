@@ -76,6 +76,12 @@ Online Store 2.0 theme in Liquid, ported from the demo (same tokens, fonts, slid
 - Brand story placeholder text on the home page (client must supply it).
 - Contact form, newsletter, back-in-stock form and checkout were **not** submitted/tested on purpose (they send real data). Someone should test them with an own email before publishing.
 - Publishing the theme is Erick's decision, after the client approves.
+- **Do not publish v8 as is.** Audit of the public theme (`valoon-theme REBRAND`, id `182385770813`, checked from the storefront on 2026-10-24) found features the new theme lacks. Plan: wait for the client's corrections, then ship **one** zip (v9) with their changes plus these four items:
+  1. **Accelerated checkout buttons** ("More payment options": Shop Pay, Apple Pay, PayPal) on the product page: `{{ form | payment_button }}` inside the product form.
+  2. **Installments message** under the price: `{{ form | payment_terms }}`.
+  3. **Structured data (JSON-LD)**: `Organization` + `WebSite` on the home page, `Product` (with offers) + `BreadcrumbList` on products; use `{{ product | structured_data }}` and the shop's logo.
+  4. **Cart extras**: order note field ("Additional Comments"), a note that the coupon code is applied at checkout, and the "Secure Shopping Guarantee" badge.
+  Already confirmed safe to switch: the old theme has no hardcoded third-party scripts or app blocks; pixels/analytics come from Shopify Customer events (store level); its back-in-stock form is a theme form, replaced by the contact-form version here. Payment, shipping and tax settings do not depend on the theme.
 
 ## Testing
 
