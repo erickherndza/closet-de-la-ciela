@@ -76,7 +76,6 @@ Online Store 2.0 theme in Liquid, ported from the demo (same tokens, fonts, slid
 - Brand story placeholder text on the home page (client must supply it).
 - Contact form, newsletter, back-in-stock form and checkout were **not** submitted/tested on purpose (they send real data). Someone should test them with an own email before publishing.
 - Publishing the theme is Erick's decision, after the client approves.
-- Last fixes (v8: collection titles) are in the zip but may not be in the last commit on `shopify-theme`.
 
 ## Testing
 
