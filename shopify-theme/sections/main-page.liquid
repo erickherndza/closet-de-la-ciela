@@ -1,0 +1,16 @@
+{%- render 'page-hero', crumb: page.title, eyebrow: section.settings.eyebrow, title: page.title, lede: section.settings.lede -%}
+<section class="section" style="padding-top:clamp(40px,5vw,72px)" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    <div class="prose rte">{{ page.content }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page content",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "lede", "label": "Intro line under the title" }
+  ]
+}
+{% endschema %}

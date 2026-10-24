@@ -1,0 +1,98 @@
+{%- liquid
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign is_all = false
+  if collection.handle == 'all'
+    assign is_all = true
+  endif
+  assign hero_title = collection.title
+  case collection.handle
+    when 'all'
+      assign hero_title = 'Shop all jewelry'
+    when '14k-18k-gold'
+      assign hero_title = '14K–18K Gold'
+    when '925-sterling-silver'
+      assign hero_title = '925 Sterling Silver'
+    when 'new-arrivals'
+      assign hero_title = 'New Arrivals'
+  endcase
+-%}
+{%- capture crumb -%}{% if is_all %}Shop{% else %}<a href="{{ routes.all_products_collection_url }}">Shop</a> / {{ hero_title }}{% endif %}{%- endcapture -%}
+{%- render 'page-hero', crumb: crumb, eyebrow: section.settings.eyebrow, title: hero_title, lede: collection.description -%}
+
+<section class="section" style="padding-top:clamp(32px,4vw,56px)" {{ section.shopify_attributes }}><div class="wrap">
+  <form class="toolbar" method="get" id="collection-form">
+    <div class="toolbar-filters">
+      {%- if section.blocks.size > 0 -%}
+        <div class="chips" role="group" aria-label="Category">
+          <a class="chip" href="{{ routes.all_products_collection_url }}" aria-pressed="{% if is_all %}true{% else %}false{% endif %}">All</a>
+          {%- for block in section.blocks -%}
+            {%- assign chip_url = block.settings.link -%}
+            <a class="chip" href="{{ chip_url }}" aria-pressed="{% if chip_url == collection.url %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      {%- if collection.filters != empty -%}
+        <div class="chips" role="group" aria-label="Availability">
+          {%- for filter in collection.filters -%}
+            {%- if filter.type == 'boolean' or filter.type == 'list' -%}
+              {%- for value in filter.values -%}
+                <label class="chip{% if value.count == 0 and value.active == false %} is-out{% endif %}" aria-pressed="{% if value.active %}true{% else %}false{% endif %}">
+                  <input type="checkbox" class="sr-only" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %} data-auto-submit>
+                  {{ value.label | escape }} <span class="chip-count">{{ value.count }}</span>
+                </label>
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="tools">
+      <label class="sr-only" for="shop-sort">Sort</label>
+      <select id="shop-sort" name="sort_by" data-auto-submit>
+        {%- for option in collection.sort_options -%}
+          <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name }}</option>
+        {%- endfor -%}
+      </select>
+      <noscript><button class="btn btn-ghost" type="submit">Apply</button></noscript>
+    </div>
+  </form>
+
+  {%- paginate collection.products by section.settings.per_page -%}
+    <p class="count" role="status" aria-live="polite" style="margin:0 0 24px">{{ collection.all_products_count }} piece{% if collection.all_products_count != 1 %}s{% endif %}{% if collection.products_count != collection.all_products_count %} · {{ collection.products_count }} shown{% endif %}</p>
+    <div class="grid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p class="empty">No pieces match your filters. Try clearing them.</p>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+      <nav class="pager pager-links" aria-label="Pagination">
+        {%- if paginate.previous -%}<a class="btn btn-ghost" href="{{ paginate.previous.url }}">Previous</a>{%- endif -%}
+        <span class="count">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+        {%- if paginate.next -%}<a class="btn btn-ghost" href="{{ paginate.next.url }}">Next</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+</div></section>
+
+{% schema %}
+{
+  "name": "Collection page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The catalog" },
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 12, "max": 48, "step": 4, "default": 24 }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category chip",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Necklaces" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 8
+}
+{% endschema %}

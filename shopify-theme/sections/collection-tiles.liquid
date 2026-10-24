@@ -1,0 +1,75 @@
+<section class="section" {{ section.shopify_attributes }}><div class="wrap">
+  {%- if section.settings.heading != blank -%}
+    <div class="section-head"><h2 class="h2">{{ section.settings.heading }}</h2></div>
+  {%- endif -%}
+  <div class="col-grid">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign col = block.settings.collection
+        assign url = block.settings.link
+        if col != blank
+          assign url = col.url
+        endif
+        assign title = block.settings.title
+        if title == blank and col != blank
+          assign title = col.title
+        endif
+        assign img = block.settings.image
+      -%}
+      <a class="col-card" href="{{ url | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+        {%- render 'theme-image', image: img, asset: block.settings.default_asset, alt: '', width: 1200, sizes: '(min-width: 640px) 50vw, 100vw' -%}
+        <span class="col-text">
+          {%- if block.settings.eyebrow != blank -%}<span class="eyebrow">{{ block.settings.eyebrow }}</span>{%- endif -%}
+          <span class="col-title">{{ title }}</span>
+          {%- if col != blank -%}<span class="col-count">{{ col.products_count }} piece{% if col.products_count != 1 %}s{% endif %}</span>{%- endif -%}
+        </span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div></section>
+
+{% schema %}
+{
+  "name": "Collection tiles",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by collection" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty to use the link below (e.g. All jewelry)." },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Collection" },
+        { "type": "text", "id": "title", "label": "Title", "info": "Defaults to the collection title." },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Leave empty to use the bundled image below." },
+        {
+          "type": "select",
+          "id": "default_asset",
+          "label": "Bundled image (used if no image is available)",
+          "options": [
+            { "value": "tile-gold.webp", "label": "Gold ring" },
+            { "value": "necklaces-layered.webp", "label": "Layered necklaces" },
+            { "value": "tile-new.webp", "label": "Drop necklace" },
+            { "value": "rings-stacked.webp", "label": "Stacked rings" }
+          ],
+          "default": "necklaces-layered.webp"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Collection tiles",
+      "blocks": [
+        { "type": "tile", "settings": { "eyebrow": "Collection", "default_asset": "tile-gold.webp" } },
+        { "type": "tile", "settings": { "eyebrow": "Collection", "default_asset": "necklaces-layered.webp" } },
+        { "type": "tile", "settings": { "eyebrow": "Just in", "default_asset": "tile-new.webp" } },
+        { "type": "tile", "settings": { "eyebrow": "Everything", "title": "All Jewelry", "default_asset": "rings-stacked.webp" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

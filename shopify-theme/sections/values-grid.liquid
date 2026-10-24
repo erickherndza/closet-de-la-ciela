@@ -1,0 +1,46 @@
+<section class="section" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    {%- if section.settings.heading != blank -%}
+      <div class="section-head"><h2 class="h2">{{ section.settings.heading }}</h2></div>
+    {%- endif -%}
+    <div class="values">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.link != blank -%}<a class="value" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{%- else -%}<div class="value" {{ block.shopify_attributes }}>{%- endif -%}
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        {%- if block.settings.link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Values grid",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Everyday pieces" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Light, comfortable jewelry that goes from morning to night." },
+        { "type": "url", "id": "link", "label": "Link (optional)" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Values grid",
+      "blocks": [
+        { "type": "value", "settings": { "title": "Everyday pieces", "text": "Light, comfortable jewelry that goes from morning to night." } },
+        { "type": "value", "settings": { "title": "Quality materials", "text": "14K–18K gold, 925 sterling silver and moissanite." } },
+        { "type": "value", "settings": { "title": "Shipped from the USA", "text": "International shipments, packed and sent from the United States." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

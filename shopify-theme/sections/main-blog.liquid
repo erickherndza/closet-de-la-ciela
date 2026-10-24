@@ -1,0 +1,44 @@
+{%- render 'page-hero', crumb: blog.title, eyebrow: section.settings.eyebrow, title: blog.title, lede: section.settings.lede -%}
+
+<section class="section" style="padding-top:clamp(40px,5vw,72px)" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    {%- paginate blog.articles by 9 -%}
+      <div class="post-grid">
+        {%- for article in blog.articles -%}
+          <a class="post-card" href="{{ article.url }}">
+            <div class="post-media">
+              {%- if article.image -%}
+                <img src="{{ article.image | image_url: width: 800 }}" srcset="{{ article.image | image_url: width: 500 }} 500w, {{ article.image | image_url: width: 900 }} 900w" sizes="(min-width: 960px) 30vw, 100vw" alt="{{ article.image.alt | default: article.title | escape }}" width="800" height="{{ 800 | divided_by: article.image.aspect_ratio | round }}" loading="lazy">
+              {%- endif -%}
+            </div>
+            <div class="post-info">
+              <span class="count">{{ article.published_at | date: '%B %-d, %Y' }}</span>
+              <h2 class="post-title">{{ article.title }}</h2>
+              {%- if article.excerpt_or_content != blank -%}<p>{{ article.excerpt_or_content | strip_html | truncate: 140 }}</p>{%- endif -%}
+              <span class="post-more">Read more</span>
+            </div>
+          </a>
+        {%- else -%}
+          <p class="empty">No articles yet.</p>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="pager pager-links" aria-label="Pagination">
+          {%- if paginate.previous -%}<a class="btn btn-ghost" href="{{ paginate.previous.url }}">Previous</a>{%- endif -%}
+          <span class="count">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a class="btn btn-ghost" href="{{ paginate.next.url }}">Next</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Journal" },
+    { "type": "text", "id": "lede", "label": "Intro line", "default": "Guides to gold, silver and gemstones from the closet." }
+  ]
+}
+{% endschema %}

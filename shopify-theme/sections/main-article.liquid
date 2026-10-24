@@ -1,0 +1,23 @@
+{%- capture crumb -%}<a href="{{ blog.url }}">{{ blog.title }}</a> / {{ article.title }}{%- endcapture -%}
+{%- capture meta -%}{{ article.published_at | date: '%B %-d, %Y' }}{% if article.author %} · {{ article.author }}{% endif %}{%- endcapture -%}
+{%- render 'page-hero', crumb: crumb, eyebrow: meta, title: article.title -%}
+
+<article class="section" style="padding-top:clamp(40px,5vw,72px)" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    {%- if article.image -%}
+      <div class="article-cover">
+        <img src="{{ article.image | image_url: width: 1400 }}" srcset="{{ article.image | image_url: width: 700 }} 700w, {{ article.image | image_url: width: 1400 }} 1400w" sizes="(min-width: 960px) 900px, 100vw" alt="{{ article.image.alt | default: article.title | escape }}" width="{{ article.image.width }}" height="{{ article.image.height }}" loading="eager">
+      </div>
+    {%- endif -%}
+    <div class="prose rte">{{ article.content }}</div>
+    <div class="article-foot">
+      <a class="btn btn-ghost" href="{{ blog.url }}">Back to {{ blog.title }}</a>
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article"
+}
+{% endschema %}

@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "c-necklaces": { "type": "category", "settings": { "label": "Necklaces", "link": "/collections/necklaces" } },
+        "c-earrings": { "type": "category", "settings": { "label": "Earrings", "link": "/collections/earrings" } },
+        "c-bracelets": { "type": "category", "settings": { "label": "Bracelets", "link": "/collections/bracelets" } },
+        "c-rings": { "type": "category", "settings": { "label": "Rings", "link": "/collections/rings" } }
+      },
+      "block_order": ["c-necklaces", "c-earrings", "c-bracelets", "c-rings"],
+      "settings": { "eyebrow": "The catalog", "per_page": 24 }
+    },
+    "newsletter": { "type": "newsletter", "settings": { "heading": "Sign up for the newsletter", "text": "New pieces, restocks and offers, straight to your inbox.", "button_label": "Submit" } }
+  },
+  "order": ["main", "newsletter"]
+}

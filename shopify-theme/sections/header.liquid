@@ -1,0 +1,97 @@
+<header class="site-header" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    <div class="header-row">
+      <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="{{ 'general.open_menu' | t }}" data-open-label="{{ 'general.open_menu' | t }}" data-close-label="{{ 'general.close_menu' | t }}">{% render 'icon', name: 'menu' %}</button>
+
+      <a class="logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}, {{ 'general.home' | t }}">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 400 }}" width="{{ settings.logo_width }}" height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | round }}" alt="{{ shop.name | escape }}">
+        {%- else -%}
+          <img src="{{ 'logo-closet-de-la-ciela.webp' | asset_url }}" width="180" height="46" alt="{{ shop.name | escape }}">
+        {%- endif -%}
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main">
+        <ul>
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign url = block.settings.link | default: routes.root_url
+              assign is_current = false
+              if url == routes.root_url
+                if request.page_type == 'index'
+                  assign is_current = true
+                endif
+              elsif request.path == url
+                assign is_current = true
+              endif
+            -%}
+            <li {{ block.shopify_attributes }}><a href="{{ url }}"{% if is_current %} aria-current="page"{% endif %}>{{ block.settings.label }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn search-toggle" type="button" aria-label="{{ 'general.search' | t }}" aria-expanded="false" aria-controls="search-bar">{% render 'icon', name: 'search' %}</button>
+        {%- if shop.customer_accounts_enabled -%}
+          <a class="icon-btn" href="{{ routes.account_url }}" aria-label="{{ 'general.account' | t }}">{% render 'icon', name: 'user' %}</a>
+        {%- endif -%}
+        <a class="icon-btn cart-link" href="{{ routes.cart_url }}" aria-label="{{ 'general.cart' | t }}">
+          {% render 'icon', name: 'bag' %}
+          <span class="cart-count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-bar" id="search-bar">
+    <div class="wrap">
+      <form role="search" action="{{ routes.search_url }}" method="get">
+        <input type="hidden" name="type" value="product">
+        <label class="sr-only" for="site-q">{{ 'general.search_placeholder' | t }}</label>
+        <input id="site-q" type="search" name="q" placeholder="{{ 'general.search_placeholder' | t }}" autocomplete="off" value="{{ search.terms | escape }}">
+        <button class="btn" type="submit">{{ 'general.search' | t }}</button>
+      </form>
+      {%- if section.settings.trending != blank -%}
+        <div class="trending">
+          <span class="label">Trending now</span>
+          {%- assign terms = section.settings.trending | newline_to_br | split: '<br />' -%}
+          {%- for term in terms -%}
+            {%- assign t = term | strip -%}
+            {%- if t != blank -%}<a class="chip" href="{{ routes.search_url }}?type=product&q={{ t | url_encode }}">{{ t }}</a>{%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "textarea", "id": "trending", "label": "Trending searches (one per line)", "default": "gold necklaces\nbracelets\npearls\nsilver necklaces\nstatement earrings\nstud earrings\ncubic zirconia\nheart jewelry\neveryday jewelry\nbridal jewelry\ngifts for her\njewelry sets" }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Menu link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Shop" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header",
+      "blocks": [
+        { "type": "link", "settings": { "label": "Shop", "link": "/collections/all" } },
+        { "type": "link", "settings": { "label": "Collections", "link": "/collections" } },
+        { "type": "link", "settings": { "label": "About Us", "link": "/pages/about-us" } },
+        { "type": "link", "settings": { "label": "Contact", "link": "/pages/contact" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

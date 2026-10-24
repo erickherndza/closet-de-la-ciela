@@ -1,0 +1,43 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "El Closet de la Ciela",
+    "theme_version": "1.0.0",
+    "theme_author": "Erick Hernandez Arias",
+    "theme_documentation_url": "https://www.erickhernandezarias.net/",
+    "theme_support_url": "https://www.erickhernandezarias.net/"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_deep", "label": "Text and buttons", "default": "#1E5468" },
+      { "type": "color", "id": "color_accent", "label": "Accent", "default": "#7FD6D3" },
+      { "type": "color", "id": "color_pop", "label": "Highlight (pink)", "default": "#E0559A" },
+      { "type": "color", "id": "color_mint", "label": "Mint bands", "default": "#CFE6E3" },
+      { "type": "color", "id": "color_bg", "label": "Background", "default": "#F7FBFA" }
+    ]
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo (teal on transparent)", "info": "Leave empty to use the bundled logo." },
+      { "type": "range", "id": "logo_width", "label": "Logo width", "min": 100, "max": 260, "step": 10, "unit": "px", "default": 180 },
+      { "type": "text", "id": "tagline", "label": "Footer tagline", "default": "Full of Jewelry, Full of Joy. International shipments from USA." }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" }
+    ]
+  },
+  {
+    "name": "Developer credit",
+    "settings": [
+      { "type": "text", "id": "credit_text", "label": "Credit text", "default": "Development:" },
+      { "type": "text", "id": "credit_name", "label": "Credit name", "default": "Erick Hernandez Arias" },
+      { "type": "url", "id": "credit_url", "label": "Credit link" }
+    ]
+  }
+]

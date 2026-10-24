@@ -1,0 +1,14 @@
+{%- comment -%} Params: crumb, eyebrow, title, lede, image (optional), asset (optional bundled image) {%- endcomment -%}
+{%- assign has_img = false -%}
+{%- if image != blank or asset != blank %}{% assign has_img = true %}{% endif -%}
+<section class="page-hero{% if has_img %} has-img{% endif %}"><div class="wrap">
+  <div style="display:grid;gap:16px;{% if has_img %}justify-items:start{% else %}justify-items:center{% endif %}">
+    <p class="crumbs" style="margin:0"><a href="{{ routes.root_url }}">Home</a> / {{ crumb }}</p>
+    {%- if eyebrow != blank -%}<span class="eyebrow">{{ eyebrow }}</span>{%- endif -%}
+    <h1 class="h1">{{ title }}</h1>
+    {%- if lede != blank -%}<div class="lede">{{ lede }}</div>{%- endif -%}
+  </div>
+  {%- if has_img -%}
+    {%- render 'theme-image', image: image, asset: asset, alt: title, width: 1100, ratio_w: 1100, ratio_h: 825, sizes: '(min-width: 960px) 45vw, 100vw', loading: 'eager' -%}
+  {%- endif -%}
+</div></section>

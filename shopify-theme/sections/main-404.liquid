@@ -1,0 +1,12 @@
+{%- render 'page-hero', crumb: '404', eyebrow: 'Page not found', title: 'We could not find that page', lede: 'The link may be old or the piece may no longer be available.' -%}
+<section class="section" {{ section.shopify_attributes }}>
+  <div class="wrap" style="display:grid;justify-items:center">
+    <a class="btn" href="{{ routes.all_products_collection_url }}">Back to the shop</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Not found"
+}
+{% endschema %}

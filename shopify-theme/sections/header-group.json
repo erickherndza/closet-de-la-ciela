@@ -1,0 +1,104 @@
+{
+  "name": "Header group",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "msg-1": {
+          "type": "message",
+          "settings": {
+            "text": "Free shipping on selected orders"
+          }
+        },
+        "msg-2": {
+          "type": "message",
+          "settings": {
+            "text": "International shipping from USA"
+          }
+        },
+        "msg-3": {
+          "type": "message",
+          "settings": {
+            "text": "14K–18K gold · 925 silver · Moissanite"
+          }
+        },
+        "msg-4": {
+          "type": "message",
+          "settings": {
+            "text": "Excludes taxes and customs fees"
+          }
+        }
+      },
+      "block_order": [
+        "msg-1",
+        "msg-2",
+        "msg-4",
+        "msg-3"
+      ],
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "l-shop": {
+          "type": "link",
+          "settings": {
+            "label": "Shop",
+            "link": "/collections/all"
+          }
+        },
+        "l-collections": {
+          "type": "link",
+          "settings": {
+            "label": "Collections",
+            "link": "/collections"
+          }
+        },
+        "l-necklaces": {
+          "type": "link",
+          "settings": {
+            "label": "Necklaces",
+            "link": "/collections/necklaces"
+          }
+        },
+        "l-rings": {
+          "type": "link",
+          "settings": {
+            "label": "Rings",
+            "link": "/collections/rings"
+          }
+        },
+        "l-about": {
+          "type": "link",
+          "settings": {
+            "label": "About Us",
+            "link": "/pages/about-us"
+          }
+        },
+        "l-contact": {
+          "type": "link",
+          "settings": {
+            "label": "Contact",
+            "link": "/pages/contact"
+          }
+        }
+      },
+      "block_order": [
+        "l-shop",
+        "l-collections",
+        "l-necklaces",
+        "l-rings",
+        "l-about",
+        "l-contact"
+      ],
+      "settings": {
+        "trending": "gold necklaces\nbracelets\npearls\nsilver necklaces\nstatement earrings\nstud earrings\ncubic zirconia\nheart jewelry\neveryday jewelry\nbridal jewelry\ngifts for her\njewelry sets"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}

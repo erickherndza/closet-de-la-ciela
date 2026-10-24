@@ -1,0 +1,23 @@
+<section class="section" {{ section.shopify_attributes }}>
+  <div class="wrap story">
+    {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    {%- if section.settings.quote != blank -%}<blockquote>{{ section.settings.quote }}</blockquote>{%- endif -%}
+    <span class="rule"></span>
+    {%- if section.settings.text != blank -%}<div class="lede">{{ section.settings.text }}</div>{%- endif -%}
+    {%- if section.settings.button_label != blank -%}<a class="btn btn-ghost" href="{{ section.settings.button_link | default: routes.root_url }}">{{ section.settings.button_label }}</a>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand story",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About us" },
+    { "type": "text", "id": "quote", "label": "Quote", "default": "Jewelry that feels like yours, every day of the week." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>[Your brand story goes here: since 2013, where the pieces come from and why people wear them every day.]</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Read our story" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Brand story" }]
+}
+{% endschema %}

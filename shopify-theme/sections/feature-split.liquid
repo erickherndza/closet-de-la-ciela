@@ -1,0 +1,44 @@
+<section class="feature-split" style="margin-top:{{ section.settings.space_above }}px" {{ section.shopify_attributes }}>
+  <div class="split{% if section.settings.image_right %} rev{% endif %}">
+    <div class="split-media"{% if section.settings.media_bg != blank %} style="background:{{ section.settings.media_bg }}"{% endif %}>
+      {%- render 'theme-image', image: section.settings.image, asset: section.settings.default_asset, alt: section.settings.alt, width: 1400, sizes: '(min-width: 820px) 50vw, 100vw', style: section.settings.object_position -%}
+    </div>
+    <div class="split-text"><div>
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 class="h2">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.text != blank -%}<p class="lede" style="text-align:center">{{ section.settings.text }}</p>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}<a class="btn" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Feature split",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "select",
+      "id": "default_asset",
+      "label": "Bundled image (used if no image is uploaded)",
+      "options": [
+        { "value": "necklaces-layered.webp", "label": "Layered necklaces" },
+        { "value": "rings-stacked.webp", "label": "Stacked rings" },
+        { "value": "hero-welcome.jpg", "label": "Welcome to our closet" }
+      ],
+      "default": "necklaces-layered.webp"
+    },
+    { "type": "text", "id": "alt", "label": "Image description (alt text)" },
+    { "type": "text", "id": "object_position", "label": "Image position (CSS)", "info": "Example: object-position:50% 30%" },
+    { "type": "color", "id": "media_bg", "label": "Image background" },
+    { "type": "range", "id": "space_above", "label": "Space above", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "image_right", "label": "Image on the right", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Necklaces" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made to be layered" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Bezel-set drops and pear-cut pendants that stack on a single neckline." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop necklaces" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Feature split" }]
+}
+{% endschema %}

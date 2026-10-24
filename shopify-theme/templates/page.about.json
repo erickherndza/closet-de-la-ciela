@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": { "type": "main-page", "settings": { "eyebrow": "About us", "lede": "Full of Jewelry, Full of Joy." } },
+    "values": {
+      "type": "values-grid",
+      "blocks": {
+        "v1": { "type": "value", "settings": { "title": "Everyday pieces", "text": "Light, comfortable jewelry that goes from morning to night." } },
+        "v2": { "type": "value", "settings": { "title": "Quality materials", "text": "14K–18K gold, 925 sterling silver and moissanite." } },
+        "v3": { "type": "value", "settings": { "title": "Shipped from the USA", "text": "International shipments, packed and sent from the United States." } }
+      },
+      "block_order": ["v1", "v2", "v3"],
+      "settings": { "heading": "What we make" }
+    },
+    "newsletter": { "type": "newsletter", "settings": { "heading": "Sign up for the newsletter", "text": "New pieces, restocks and offers, straight to your inbox.", "button_label": "Submit" } }
+  },
+  "order": ["main", "values", "newsletter"]
+}

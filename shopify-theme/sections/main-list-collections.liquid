@@ -1,0 +1,59 @@
+{%- render 'page-hero', crumb: 'Collections', eyebrow: 'Shop by collection', title: 'Collections', lede: 'Pick a collection to start browsing.' -%}
+
+{%- comment -%} Fixed order; images and display names follow the home page tiles. {%- endcomment -%}
+{%- assign handles = '14k-18k-gold,925-sterling-silver,new-arrivals,necklaces,earrings,bracelets,rings' | split: ',' -%}
+
+<section class="section" style="padding-top:clamp(32px,4vw,56px)" {{ section.shopify_attributes }}><div class="wrap">
+  <div class="col-grid">
+    {%- for handle in handles -%}
+      {%- assign collection = collections[handle] -%}
+      {%- if collection.products_count > 0 -%}
+        {%- liquid
+          assign asset = ''
+          assign title = collection.title
+          assign eyebrow = 'Collection'
+          case handle
+            when '14k-18k-gold'
+              assign asset = 'tile-gold.webp'
+              assign title = '14K–18K Gold'
+            when '925-sterling-silver'
+              assign asset = 'necklaces-layered.webp'
+              assign title = '925 Sterling Silver'
+            when 'new-arrivals'
+              assign asset = 'tile-new.webp'
+              assign title = 'New Arrivals'
+              assign eyebrow = 'Just in'
+            when 'rings'
+              assign asset = 'rings-stacked.webp'
+          endcase
+        -%}
+        <a class="col-card" href="{{ collection.url }}">
+          {%- if asset != blank -%}
+            {%- render 'theme-image', asset: asset, alt: '', ratio_w: 1100, ratio_h: 1100 -%}
+          {%- else -%}
+            {%- render 'theme-image', image: collection.products.first.featured_image, alt: '', width: 1200, sizes: '(min-width: 640px) 50vw, 100vw' -%}
+          {%- endif -%}
+          <span class="col-text">
+            <span class="eyebrow">{{ eyebrow }}</span>
+            <span class="col-title">{{ title }}</span>
+            <span class="col-count">{{ collection.products_count }} piece{% if collection.products_count != 1 %}s{% endif %}</span>
+          </span>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+    <a class="col-card" href="{{ routes.all_products_collection_url }}">
+      {%- render 'theme-image', asset: 'rings-stacked.webp', alt: '', ratio_w: 1100, ratio_h: 1100 -%}
+      <span class="col-text">
+        <span class="eyebrow">Everything</span>
+        <span class="col-title">All Jewelry</span>
+        <span class="col-count">{{ collections.all.products_count }} pieces</span>
+      </span>
+    </a>
+  </div>
+</div></section>
+
+{% schema %}
+{
+  "name": "Collections list"
+}
+{% endschema %}

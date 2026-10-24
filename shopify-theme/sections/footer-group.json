@@ -1,0 +1,76 @@
+{
+  "name": "Footer group",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": {
+          "type": "links",
+          "settings": {
+            "heading": "Shop",
+            "label_1": "All jewelry",
+            "link_1": "/collections/all",
+            "label_2": "Collections",
+            "link_2": "/collections",
+            "label_3": "Necklaces",
+            "link_3": "/collections/necklaces",
+            "label_4": "Rings",
+            "link_4": "/collections/rings"
+          }
+        },
+        "company": {
+          "type": "links",
+          "settings": {
+            "heading": "Company",
+            "label_1": "About Us",
+            "link_1": "/pages/about-us",
+            "label_2": "Contact",
+            "link_2": "/pages/contact",
+            "label_3": "Journal",
+            "link_3": "/blogs/news",
+            "label_4": "Terms and conditions",
+            "link_4": "/pages/our-terms-and-conditions",
+            "label_5": "Data sharing opt-out",
+            "link_5": "/pages/data-sharing-opt-out"
+          }
+        },
+        "social": {
+          "type": "social",
+          "settings": {
+            "heading": "Follow us"
+          }
+        },
+        "policies": {
+          "type": "policies",
+          "settings": {
+            "heading": "Policies"
+          }
+        },
+        "account": {
+          "type": "links",
+          "settings": {
+            "heading": "My account",
+            "label_1": "Orders",
+            "link_1": "/account",
+            "label_2": "Profile",
+            "link_2": "/account"
+          }
+        }
+      },
+      "block_order": [
+        "shop",
+        "company",
+        "account",
+        "social",
+        "policies"
+      ],
+      "settings": {
+        "note": "Free shipping excludes taxes and international customs fees"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

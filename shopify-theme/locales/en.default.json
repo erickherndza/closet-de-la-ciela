@@ -1,0 +1,21 @@
+{
+  "general": {
+    "skip": "Skip to content",
+    "home": "Home",
+    "search": "Search",
+    "search_placeholder": "Search jewelry…",
+    "account": "My account",
+    "cart": "Shopping bag",
+    "open_menu": "Open menu",
+    "close_menu": "Close menu"
+  },
+  "products": {
+    "sold_out": "Sold out",
+    "new": "New",
+    "add_to_bag": "Add to bag",
+    "select_options": "Select options",
+    "option_sold_out": "This option is currently sold out.",
+    "quantity": "Quantity",
+    "from": "From"
+  }
+}

@@ -1,0 +1,30 @@
+{%- comment -%}
+  Renders an uploaded image, or falls back to a file bundled in /assets.
+  Params: image, asset, alt, width (px, for srcset), ratio_w, ratio_h, loading, style, class
+{%- endcomment -%}
+{%- liquid
+  assign w = width | default: 1400
+  assign load = loading | default: 'lazy'
+-%}
+{%- if image != blank -%}
+  <img
+    src="{{ image | image_url: width: w }}"
+    srcset="{{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 1000 }} 1000w, {{ image | image_url: width: 1600 }} 1600w, {{ image | image_url: width: 2400 }} 2400w"
+    sizes="{{ sizes | default: '100vw' }}"
+    alt="{{ alt | default: image.alt | escape }}"
+    width="{{ image.width }}"
+    height="{{ image.height }}"
+    loading="{{ load }}"
+    {% if class != blank %}class="{{ class }}"{% endif %}
+    {% if style != blank %}style="{{ style }}"{% endif %}
+  >
+{%- elsif asset != blank -%}
+  <img
+    src="{{ asset | asset_url }}"
+    alt="{{ alt | escape }}"
+    width="{{ ratio_w | default: 1400 }}" height="{{ ratio_h | default: 1000 }}"
+    loading="{{ load }}"
+    {% if class != blank %}class="{{ class }}"{% endif %}
+    {% if style != blank %}style="{{ style }}"{% endif %}
+  >
+{%- endif -%}

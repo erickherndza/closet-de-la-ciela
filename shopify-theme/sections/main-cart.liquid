@@ -1,0 +1,48 @@
+{%- render 'page-hero', crumb: 'Shopping bag', title: 'Your bag' -%}
+<section class="section" style="padding-top:clamp(32px,4vw,56px)" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    {%- if cart.item_count == 0 -%}
+      <div style="text-align:center;display:grid;gap:20px;justify-items:center">
+        <p class="empty" style="padding:0">Your bag is empty.</p>
+        <a class="btn" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" id="cart-form" class="cart">
+        <ul class="cart-items">
+          {%- for item in cart.items -%}
+            <li class="cart-item">
+              <a class="cart-img" href="{{ item.url }}">
+                {%- if item.image -%}<img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.image.alt | default: item.product.title | escape }}" width="120" height="150" loading="lazy">{%- endif -%}
+              </a>
+              <div class="cart-info">
+                <a class="card-title" href="{{ item.url }}">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}<span class="count">{{ item.variant.title }}</span>{%- endunless -%}
+                <span class="card-price">{{ item.final_price | money_with_currency }}</span>
+                <a class="cart-remove" href="{{ item.url_to_remove }}">Remove</a>
+              </div>
+              <div class="cart-qty">
+                <label class="sr-only" for="qty-{{ item.index }}">{{ 'products.quantity' | t }}</label>
+                <input id="qty-{{ item.index }}" class="qty" type="number" name="updates[]" value="{{ item.quantity }}" min="0" max="10">
+              </div>
+              <div class="cart-line card-price">{{ item.final_line_price | money_with_currency }}</div>
+            </li>
+          {%- endfor -%}
+        </ul>
+        <div class="cart-foot">
+          <p class="cart-total"><span class="label">Subtotal</span> <strong>{{ cart.total_price | money_with_currency }}</strong></p>
+          <p class="count" style="margin:0">Taxes and shipping calculated at checkout.</p>
+          <div class="cart-actions">
+            <button class="btn btn-ghost" type="submit" name="update">Update bag</button>
+            <button class="btn" type="submit" name="checkout">Check out</button>
+          </div>
+        </div>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart page"
+}
+{% endschema %}

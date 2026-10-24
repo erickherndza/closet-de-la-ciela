@@ -1,0 +1,59 @@
+{%- render 'page-hero', crumb: page.title, eyebrow: 'Get in touch', title: 'Contact us', lede: section.settings.lede -%}
+<section class="section" style="padding-top:clamp(40px,5vw,72px)" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    <div class="contact-grid">
+      <div>
+        {%- form 'contact', class: 'form' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="form-msg ok" role="status">Thanks! Your message was sent. We will reply as soon as we can.</p>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <p class="form-msg err" role="alert">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+          <div class="field"><label for="c-name">Name</label><input id="c-name" name="contact[name]" type="text" autocomplete="name" value="{{ form.name }}" required></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" name="contact[email]" type="email" autocomplete="email" value="{{ form.email }}" required></div>
+          <div class="field"><label for="c-phone">Phone (optional)</label><input id="c-phone" name="contact[phone]" type="tel" autocomplete="tel" value="{{ form.phone }}"></div>
+          <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="contact[body]" required>{{ form.body }}</textarea></div>
+          <div><button class="btn" type="submit">Send message</button></div>
+        {%- endform -%}
+      </div>
+      <aside class="info">
+        <div>
+          <h3>Contact</h3>
+          <p style="margin:0">
+            {%- if section.settings.email != blank -%}<a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a><br>{%- endif -%}
+            {%- if section.settings.phone != blank -%}<a href="tel:{{ section.settings.phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' }}">{{ section.settings.phone }}</a>{%- endif -%}
+          </p>
+        </div>
+        <div>
+          <h3>Follow us</h3>
+          <p style="margin:0">
+            {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
+            {%- if settings.social_facebook != blank %} · <a href="{{ settings.social_facebook }}" target="_blank" rel="noopener">Facebook</a>{%- endif -%}
+          </p>
+        </div>
+        <div>
+          <h3>Shipping</h3>
+          <p style="margin:0;color:var(--body)">International shipments from USA. Free shipping on selected orders; taxes and customs fees not included.</p>
+        </div>
+        <div>
+          <h3>Policies</h3>
+          {%- for policy in shop.policies -%}
+            <details class="policy"><summary>{{ policy.title }}</summary><p><a href="{{ policy.url }}">Read the full policy</a></p></details>
+          {%- endfor -%}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [
+    { "type": "text", "id": "lede", "label": "Intro line", "default": "Questions about an order or a piece? Write to us." },
+    { "type": "text", "id": "email", "label": "Email", "default": "elclosetdelacielausa@gmail.com" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "1 (849) 480-0426" }
+  ]
+}
+{% endschema %}

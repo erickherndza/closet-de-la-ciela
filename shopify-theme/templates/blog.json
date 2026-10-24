@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-blog", "settings": { "eyebrow": "Journal", "lede": "Guides to gold, silver and gemstones from the closet." } },
+    "newsletter": { "type": "newsletter", "settings": { "heading": "Sign up for the newsletter", "text": "New pieces, restocks and offers, straight to your inbox.", "button_label": "Submit" } }
+  },
+  "order": ["main", "newsletter"]
+}

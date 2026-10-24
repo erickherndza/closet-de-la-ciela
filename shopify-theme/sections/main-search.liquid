@@ -1,0 +1,35 @@
+{%- capture search_title -%}{% if search.performed %}Results for “{{ search.terms | escape }}”{% else %}Search{% endif %}{%- endcapture -%}
+{%- render 'page-hero', crumb: 'Search', eyebrow: 'Find a piece', title: search_title -%}
+<section class="section" style="padding-top:clamp(32px,4vw,56px)" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    {%- paginate search.results by 24 -%}
+      {%- if search.performed -%}
+        <p class="count" role="status" style="margin:0 0 24px">{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %}</p>
+      {%- endif -%}
+      <div class="grid">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'product-card', product: item %}
+          {%- else -%}
+            <a class="value" href="{{ item.url }}"><h3>{{ item.title }}</h3></a>
+          {%- endif -%}
+        {%- else -%}
+          {%- if search.performed -%}<p class="empty">No pieces match your search. Try another word.</p>{%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="pager pager-links" aria-label="Pagination">
+          {%- if paginate.previous -%}<a class="btn btn-ghost" href="{{ paginate.previous.url }}">Previous</a>{%- endif -%}
+          <span class="count">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a class="btn btn-ghost" href="{{ paginate.next.url }}">Next</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search results"
+}
+{% endschema %}
