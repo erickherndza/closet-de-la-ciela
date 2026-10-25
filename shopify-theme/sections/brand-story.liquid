@@ -1,10 +1,15 @@
-<section class="section" {{ section.shopify_attributes }}>
-  <div class="wrap story">
-    {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
-    {%- if section.settings.quote != blank -%}<blockquote>{{ section.settings.quote }}</blockquote>{%- endif -%}
-    <span class="rule"></span>
-    {%- if section.settings.text != blank -%}<div class="lede">{{ section.settings.text }}</div>{%- endif -%}
-    {%- if section.settings.button_label != blank -%}<a class="btn btn-ghost" href="{{ section.settings.button_link | default: routes.root_url }}">{{ section.settings.button_label }}</a>{%- endif -%}
+<section id="story" class="section" {{ section.shopify_attributes }}>
+  <div class="wrap about-home">
+    <div class="about-text">
+      {%- if section.settings.eyebrow != blank -%}<h2 class="h2">{{ section.settings.eyebrow }}</h2>{%- endif -%}
+      <p class="lede">{{ section.settings.text_1 }} {{ section.settings.text_2 }} {{ section.settings.text_3 }}</p>
+      <span class="rule"></span>
+      {%- if section.settings.quote != blank -%}<blockquote class="about-quote">{{ section.settings.quote }}</blockquote>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}<a class="btn btn-ghost" href="{{ section.settings.button_link | default: routes.root_url }}">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div>
+    <div class="about-photo">
+      {%- render 'theme-image', image: section.settings.image, asset: 'about-seal.webp', alt: section.settings.alt, width: 573, ratio_w: 573, ratio_h: 780, sizes: '(min-width: 760px) 34vw, 80vw' -%}
+    </div>
   </div>
 </section>
 
@@ -12,11 +17,15 @@
 {
   "name": "Brand story",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About us" },
-    { "type": "text", "id": "quote", "label": "Quote", "default": "Jewelry that feels like yours, every day of the week." },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>[Your brand story goes here: since 2013, where the pieces come from and why people wear them every day.]</p>" },
+    { "type": "text", "id": "eyebrow", "label": "Title", "default": "About us" },
+    { "type": "text", "id": "text_1", "label": "Paragraph, part 1", "default": "At El Clóset de la Ciela, we believe that every piece of jewelry should tell a story." },
+    { "type": "text", "id": "text_2", "label": "Paragraph, part 2", "default": "Since 2013, we have been selecting dainty and one-of-a-kind pieces." },
+    { "type": "text", "id": "text_3", "label": "Paragraph, part 3", "default": "Today, we reach from the Dominican Republic to the world." },
+    { "type": "text", "id": "quote", "label": "Quote", "default": "More than accessories, we deliver small treasures." },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Read our story" },
-    { "type": "url", "id": "button_link", "label": "Button link" }
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "image_picker", "id": "image", "label": "Photo (overrides the bundled one)" },
+    { "type": "text", "id": "alt", "label": "Photo alt text", "default": "El Closet de la Ciela seal, since 2013" }
   ],
   "presets": [{ "name": "Brand story" }]
 }

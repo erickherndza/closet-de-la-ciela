@@ -63,7 +63,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .logo img{width:180px;height:auto}
 .main-nav{justify-self:center}
 .main-nav ul{display:flex;gap:0 clamp(18px,2.4vw,40px)}
-.main-nav a{display:block;padding:10px 0;font-family:var(--font-label);font-size:10px;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid transparent}
+.main-nav a{display:block;padding:10px 0;font-family:var(--font-label);font-weight:700;font-size:10px;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid transparent}
 .main-nav a:hover{opacity:1;border-bottom-color:var(--accent)}
 .main-nav a[aria-current="page"]{border-bottom-color:var(--pop)}
 .header-actions{justify-self:end;display:flex;align-items:center;gap:2px}
@@ -182,6 +182,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .band .h2 em{color:var(--deep)}
 .story{display:grid;justify-items:center;gap:22px;text-align:center}
 .story blockquote{margin:0;font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(2rem,1.3rem + 2vw,3.2rem);line-height:1.2;max-width:24ch;text-wrap:balance}
+.about-home{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(32px,6vw,88px);align-items:center;max-width:none;margin:0;padding:0 0 0 max(var(--gutter),calc((100% - 1100px)/2 + var(--gutter)))}
+.about-photo{justify-self:end;width:min(80%,420px);align-self:center}
+.about-photo img{width:100%;height:auto;display:block}
+@media(min-width:760px){.about-home{grid-template-columns:minmax(0,1fr) minmax(280px,34vw)}.about-photo{width:100%;max-width:560px}}
+.about-text{display:grid;gap:22px;justify-items:start;text-align:left}
+.about-text p{margin:0;max-width:56ch}
+.about-quote{margin:0;font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(1.6rem,1.2rem + 1.2vw,2.4rem);line-height:1.25;max-width:26ch}
 .rule{width:56px;height:1px;background:var(--pop);display:block}
 .newsletter{display:grid;gap:18px;justify-items:center;text-align:center}
 .nl-form{display:flex;width:100%;max-width:480px;border:1px solid var(--deep);border-radius:999px;overflow:hidden;background:#fff}

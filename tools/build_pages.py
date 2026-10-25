@@ -209,25 +209,20 @@ home=head('El Closet de la Ciela | Jewelry — Full of Jewelry, Full of Joy','14
 </div>
 </section>
 
-<section class="section"><div class="band"><div class="wrap">
-<div class="section-head"><h2 class="h2"><em>Full of jewelry, full of joy</em></h2></div>
-<div class="benefits">
-<div class="benefit"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#1E5468" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><h3>Free shipping</h3><p>On selected orders. Taxes and international customs fees are not included.</p></div>
-<div class="benefit"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#1E5468" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><h3>Ships from the USA</h3><p>International shipments, packed and sent from the United States.</p></div>
-<div class="benefit"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#1E5468" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h16v10H4z"/><path d="M3 7h18v3H3z"/><path d="M12 7v13"/><path d="M12 7c-2-4-6-3-5 0M12 7c2-4 6-3 5 0"/></svg><h3>Gifts for her</h3><p>Jewelry sets, pearls and heart pieces that arrive ready to give.</p></div>
-</div>
-</div></div></section>
 
 <section class="section"><div class="wrap" style="max-width:1200px">
 <a href="https://www.instagram.com/elclosetdelaciela/" target="_blank" rel="noopener"><img src="images/community-instagram.webp" width="1400" height="882" alt="Follow us and be part of the community, #CIELALOVERS, follow us on Instagram" loading="lazy"></a>
 </div></section>
 
-<section id="story" class="section"><div class="wrap story">
-<span class="eyebrow">About us</span>
-<blockquote>Jewelry that feels like yours, every day of the week.</blockquote>
+<section id="story" class="section"><div class="wrap about-home">
+<div class="about-text">
+<h2 class="h2">About us</h2>
+<p class="lede">At El Clóset de la Ciela, we believe that every piece of jewelry should tell a story. Since 2013, inspired by the passion of Angelina Flores, ‘La Ciela,’ we have been selecting dainty and one-of-a-kind pieces that combine elegance with a fresh, youthful touch. Today, we reach from the Dominican Republic to the world, with international shipping and an online store based in the U.S., offering modern, accessible jewelry with that unmistakable joy our packages bring when they arrive.</p>
 <span class="rule"></span>
-<p class="lede">[Your brand story goes here: since 2013, where the pieces come from and why people wear them every day.]</p>
-<a class="btn btn-ghost" href="about.html">Read our story</a>
+<blockquote class="about-quote">“More than accessories, we deliver small treasures wrapped in a unique shopping experience.”</blockquote>
+<a class="btn btn-ghost" href="about.html">Discover our story</a>
+</div>
+<div class="about-photo"><img src="images/about-seal.webp" width="573" height="780" alt="El Closet de la Ciela seal, since 2013" loading="lazy"></div>
 </div></section>
 '''+newsletter()+foot()
 write('index.html',home)

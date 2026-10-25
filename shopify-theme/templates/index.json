@@ -206,9 +206,11 @@
       "type": "brand-story",
       "settings": {
         "eyebrow": "About us",
-        "quote": "Jewelry that feels like yours, every day of the week.",
-        "text": "<p>[Your brand story goes here: since 2013, where the pieces come from and why people wear them every day.]</p>",
-        "button_label": "Read our story",
+        "text_1": "At El Clóset de la Ciela, we believe that every piece of jewelry should tell a story.",
+        "text_2": "Since 2013, inspired by the passion of Angelina Flores, ‘La Ciela,’ we have been selecting dainty and one-of-a-kind pieces that combine elegance with a fresh, youthful touch.",
+        "text_3": "Today, we reach from the Dominican Republic to the world, with international shipping and an online store based in the U.S., offering modern, accessible jewelry with that unmistakable joy our packages bring when they arrive.",
+        "quote": "“More than accessories, we deliver small treasures wrapped in a unique shopping experience.”",
+        "button_label": "Discover our story",
         "button_link": "/pages/about-us"
       }
     },
