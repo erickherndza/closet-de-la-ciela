@@ -183,9 +183,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .story{display:grid;justify-items:center;gap:22px;text-align:center}
 .story blockquote{margin:0;font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(2rem,1.3rem + 2vw,3.2rem);line-height:1.2;max-width:24ch;text-wrap:balance}
 .about-home{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(32px,6vw,88px);align-items:center;max-width:none;margin:0;padding:0 0 0 max(var(--gutter),calc((100% - 1100px)/2 + var(--gutter)))}
-.about-photo{justify-self:end;width:min(80%,420px);align-self:center}
+.about-photo{justify-self:center;width:min(86%,420px);align-self:center;padding-bottom:8px}
 .about-photo img{width:100%;height:auto;display:block}
-@media(min-width:760px){.about-home{grid-template-columns:minmax(0,1fr) minmax(280px,34vw)}.about-photo{width:100%;max-width:560px}}
+@media(min-width:760px){.about-home{grid-template-columns:minmax(0,1fr) minmax(280px,34vw)}.about-photo{justify-self:end;width:100%;max-width:560px;padding-bottom:0}}
 .about-text{display:grid;gap:22px;justify-items:start;text-align:left}
 .about-text p{margin:0;max-width:56ch}
 .about-quote{margin:0;font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(1.6rem,1.2rem + 1.2vw,2.4rem);line-height:1.25;max-width:26ch}

@@ -31,7 +31,7 @@ def head(title,desc,page):
 <div class="wrap">
 <div class="header-row">
 <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Open menu">{SVG_MENU}</button>
-<a class="logo" href="index.html" aria-label="El Closet de la Ciela Jewelry, home"><img src="images/logo-closet-de-la-ciela.webp" width="180" height="46" alt="El Closet de la Ciela Jewelry"></a>
+<a class="logo" href="index.html" aria-label="El Closet de la Ciela Jewelry, home"><img src="images/logo-closet-de-la-ciela.webp" width="180" height="49" alt="El Closet de la Ciela Jewelry"></a>
 <nav class="main-nav" id="main-nav" aria-label="Main">
 <ul>
 ''' + '\n'.join(f'<li><a href="{h}"{" aria-current=\"page\"" if k==page else ""}>{n}</a></li>' for k,n,h in NAV) + f'''
@@ -59,7 +59,7 @@ def foot():
 <div class="wrap">
 <div class="footer-grid">
 <div class="footer-brand">
-<img src="images/logo-closet-de-la-ciela.webp" width="180" height="46" alt="El Closet de la Ciela Jewelry">
+<img src="images/logo-closet-de-la-ciela.webp" width="180" height="49" alt="El Closet de la Ciela Jewelry">
 <p>Full of Jewelry, Full of Joy. International shipments from USA.</p>
 </div>
 <div>
@@ -222,7 +222,7 @@ home=head('El Closet de la Ciela | Jewelry — Full of Jewelry, Full of Joy','14
 <blockquote class="about-quote">“More than accessories, we deliver small treasures wrapped in a unique shopping experience.”</blockquote>
 <a class="btn btn-ghost" href="about.html">Discover our story</a>
 </div>
-<div class="about-photo"><img src="images/about-seal.webp" width="573" height="780" alt="El Closet de la Ciela seal, since 2013" loading="lazy"></div>
+<div class="about-photo"><img src="images/about-logo.webp" width="900" height="908" alt="El Closet de la Ciela seal, since 2013" loading="lazy"></div>
 </div></section>
 '''+newsletter()+foot()
 write('index.html',home)
