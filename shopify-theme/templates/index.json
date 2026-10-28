@@ -51,7 +51,7 @@
             "default_asset": "slide-rainbow.webp",
             "bg": "#DCE6F5",
             "alt": "Candy baguette zirconia necklace",
-            "object_position": "object-position:50% 30%",
+            "object_position": "object-fit:contain;object-position:50% 50%",
             "eyebrow": "New color",
             "title": "A little <em>rainbow</em> for every day",
             "copy": "Playful color for your neckline, in delicate pieces that go with everything.",
