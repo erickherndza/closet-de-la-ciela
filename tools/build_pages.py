@@ -146,7 +146,7 @@ home=head('El Closet de la Ciela | Jewelry — Full of Jewelry, Full of Joy','14
 <p class="hs-copy">Playful color for your neckline, in delicate pieces that go with everything.</p>
 <a class="btn" href="shop.html?collection=new">Discover new arrivals</a>
 </div>
-<div class="hs-media"><img src="images/products/candy-baguette-zirconia-necklace-1.webp" alt="Candy Baguette Zirconia Necklace" loading="lazy" style="object-fit:contain;object-position:50% 50%"></div>
+<div class="hs-media"><img src="images/products/candy-baguette-zirconia-necklace-1.webp" alt="Candy Baguette Zirconia Necklace" loading="lazy" style="object-fit:contain;object-position:50% 50%;padding:7%;background:#fff;box-sizing:border-box"></div>
 </article>
 </div>
 <div class="hs-ctrl">
